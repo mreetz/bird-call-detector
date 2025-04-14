@@ -1,0 +1,12 @@
+# Python
+__pychache__/
+*.py[cod]
+*.egg-info/
+venv/
+
+# Logs
+*.log
+
+# Data and Models
+/data/*
+/models/*

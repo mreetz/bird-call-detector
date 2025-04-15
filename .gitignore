@@ -7,6 +7,3 @@ venv/
 # Logs
 *.log
 
-# Data and Models
-/data/*
-/models/*

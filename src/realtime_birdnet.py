@@ -5,9 +5,11 @@ import sounddevice as sd
 import numpy as np
 import tensorflow as tf
 from scipy.signal import spectrogram
+from scipy.signal import resample
 
 # Constants
-SAMPLE_RATE = 32000
+SAMPLE_RATE = 16000 # Sample rate in Hz; my mic cannot do 32000
+DEVICE_INDEX = 0 # Device index for the microphone; change if needed
 DURATION = 3
 MODEL_PATH = "../../BirdNET-Lite/model/BirdNET_Lite_Model_FP32.tflite"
 LABELS_PATH = "../../BirdNET-Lite/model/labels.txt"
@@ -26,7 +28,7 @@ with open(LABELS_PATH, "r") as f:
 
 def capture_audio():
     print("Recording...")
-    audio = sd.rec(int(SAMPLE_RATE * DURATION), samplerate=SAMPLE_RATE, channels=1, dtype='int16')
+    audio = sd.rec(int(SAMPLE_RATE * DURATION), samplerate=SAMPLE_RATE, channels=1, dtype='int16', device=DEVICE_INDEX)
     sd.wait()
     return np.squeeze(audio)
 
@@ -48,6 +50,12 @@ def classify(audio_array):
     species = labels[top_idx]
     return species, top_conf
 
+def upsample_audio(audio, original_rate=16000, target_rate=32000):
+    # Resample audio to target rate
+    duration = len(audio) / original_rate
+    num_samples = int(duration * target_rate)
+    return resample(audio, num_samples).astype(np.int16)
+
 # csv file setup (later we will replace this with a database, but I want to run it and anaylze the data first to understand 
 # the load and shapes of the data to better do pre-processing)
 write_header = not os.path.exists(CSV_FILE)
@@ -61,7 +69,8 @@ if write_header:
     # 🔁 Real-time loop
 try:
     while True:
-        audio = sd.rec(int(SAMPLE_RATE * DURATION), samplerate=SAMPLE_RATE, channels=1, dtype='int16')
+        raw_audio = sd.rec(int(SAMPLE_RATE * DURATION), samplerate=SAMPLE_RATE, channels=1, dtype='int16', device=DEVICE_INDEX)
+        audio = upsample_audio(raw_audio, 16000,32000)
         sd.wait()
         audio = np.squeeze(audio)
 
@@ -79,7 +88,7 @@ try:
         species = labels[top_idx]
 
         # Log if confident enough
-        if confidence > CONFIDENCE_THRESHOLD:
+        if confidence > CONFIDENCE_THRESHOLD
             timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
             print(f"[{timestamp}] Detected: {species} ({confidence:.2f})")
             csv_writer.writerow([timestamp, species, round(confidence, 4)])

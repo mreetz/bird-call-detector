@@ -12,8 +12,8 @@ RAW_SAMPLE_RATE = 16000          # Your mic's sample rate
 TARGET_SAMPLE_RATE = 32000       # BirdNET model expects 32kHz
 DURATION = 3                     # Duration of each audio capture in seconds
 DEVICE_INDEX = 0                 # Your confirmed mic index
-MODEL_PATH = "model/BirdNET_6K_GLOBAL_MODEL.tflite"
-LABELS_PATH = "model/labels.txt"
+MODEL_PATH = "../BirdNET-Lite/model/BirdNET_6K_GLOBAL_MODEL.tflite"
+LABELS_PATH = "./BirdNET-Litemodel/labels.txt"
 CONFIDENCE_THRESHOLD = 0.7
 CSV_FILE = "detections.csv"
 

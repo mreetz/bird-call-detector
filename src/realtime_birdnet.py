@@ -9,8 +9,8 @@ from scipy.signal import spectrogram
 # Constants
 SAMPLE_RATE = 32000
 DURATION = 3
-MODEL_PATH = "../BirdNET-Lite/model/BirdNET_Lite_Model_FP32.tflite"
-LABELS_PATH = "../BirdNET-Lite/model/labels.txt"
+MODEL_PATH = "../../BirdNET-Lite/model/BirdNET_Lite_Model_FP32.tflite"
+LABELS_PATH = "../../BirdNET-Lite/model/labels.txt"
 CONFIDENCE_THRESHOLD = 0.7
 CSV_FILE = "detectons.csv"
 

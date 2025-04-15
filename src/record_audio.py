@@ -27,3 +27,4 @@ if __name__ == "__main__":
 # The script can be run directly to record audio.
 # It imports necessary libraries, defines constants, and implements the recording function.
 # The script is designed to be run as a standalone program.
+# I used it to test that my microphone was working on the raspberry pi.

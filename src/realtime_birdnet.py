@@ -3,6 +3,7 @@ import numpy as np
 import tensorflow as tf
 from scipy.signal import spectrogram, resample
 from scipy.ndimage import zoom
+from scipy.io.wavfile import write as wav
 import time
 import csv
 import os
@@ -38,6 +39,10 @@ def capture_audio():
         device=DEVICE_INDEX
     )
     sd.wait()
+    # optionally save the audio to a file for debugging
+    timestamp = time.strftime('%Y%m%d_%H%M%S')
+    filename = f"recordings/recording_{timestamp}.wav"
+    wav.write(filename, RAW_SAMPLE_RATE, audio)
     return np.squeeze(audio)
 
 def upsample_audio(audio):

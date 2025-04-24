@@ -62,7 +62,7 @@ DEVICE_INDEX = 0  # use test_microphones.py to determine this
 DEBUG = False  # set to True for debug WAV capture
 ```
 
-Update the database connection:
+Update the database connection in db_config.py
 
 #### For Remote MariaDB:
 ```python

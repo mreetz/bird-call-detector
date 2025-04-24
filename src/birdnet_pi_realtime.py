@@ -12,6 +12,7 @@ import csv
 from scipy.signal import resample
 import mariadb
 import syslog
+
 from db_config import MYSQL_CONFIG
 
 # ================================

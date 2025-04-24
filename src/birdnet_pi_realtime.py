@@ -13,6 +13,8 @@ from scipy.signal import resample
 import mariadb
 import syslog
 
+from db_config import MYSQL_CONFIG
+
 # ================================
 # CONFIGURATION
 # ================================
@@ -28,13 +30,6 @@ CSV_LOG = "detections.csv"
 DEBUG_AUDIO_DIR = "/mnt/ramdisk/debug_audio"
 RAMDISK_WARNING_THRESHOLD_MB = 100
 
-MYSQL_CONFIG = {
-    'host': '',
-    'user': '',
-    'password': '',
-    'database': '',
-    'port': 3307
-}
 
 os.makedirs(DEBUG_AUDIO_DIR, exist_ok=True)
 write_header = not os.path.exists(CSV_LOG)

@@ -29,10 +29,10 @@ DEBUG_AUDIO_DIR = "/mnt/ramdisk/debug_audio"
 RAMDISK_WARNING_THRESHOLD_MB = 100
 
 MYSQL_CONFIG = {
-    'host': '192.168.86.240',
-    'user': 'birdnet_user',
-    'password': 'Birdnetfoobar69!',
-    'database': 'birdcall',
+    'host': '',
+    'user': '',
+    'password': '',
+    'database': '',
     'port': 3307
 }
 

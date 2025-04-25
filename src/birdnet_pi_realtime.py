@@ -12,7 +12,7 @@ import csv
 from scipy.signal import resample
 import mariadb
 import syslog
-
+from db import Database
 from db_config import MYSQL_CONFIG
 
 # ================================
@@ -76,37 +76,24 @@ def analyze_audio_file(file_path):
 def log_detection(timestamp, species, confidence, audio_file):
     csv_writer.writerow([timestamp, species, round(confidence, 4), audio_file])
     csv_file.flush()
+    
+    db = Database()
     try:
-        conn = mariadb.connect(**MYSQL_CONFIG)
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO detections (timestamp, species, confidence)
-            VALUES (%s, %s, %s)
-        """, (timestamp, species, confidence))
-        conn.commit()
-        cursor.close()
-        conn.close()
-    except mariadb.Error as err:
+        db.insert_detection(species, timestamp, confidence)
+    except db.Error as err:
         print(f"MySQL error: {err}")
+    finally:
+        db.close()
 
 def summarize_daily_counts():
+    db = Database()
     try:
-        conn = mariadb.connect(**MYSQL_CONFIG)
-        cursor = conn.cursor()
         yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
-        cursor.execute("""
-            INSERT INTO daily_summary (summary_date, species, count)
-            SELECT DATE(timestamp), species, COUNT(*)
-            FROM detections
-            WHERE DATE(timestamp) = %s
-            GROUP BY species
-        """, (yesterday,))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        print("[Summary] Daily summary inserted.")
-    except mariadb.Error as err:
-        print(f"MySQL summary error: {err}")
+        db.insert_daily_summary(yesterday)
+    except db.Error as err:
+        print(f"MySQL error: {err}")
+    finally:
+        db.close()
 
 def cleanup_debug_audio(file_path):
     if os.path.exists(file_path):

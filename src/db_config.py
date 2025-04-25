@@ -1,7 +1,13 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 MYSQL_CONFIG = {
-    "host": "localhost",
-    "user": "bird_user",
-    "password": "bird_pass",
-    "database": "birdcalls",
-    "port": 3306
+    "host": os.getenv("MYSQL_HOST"),
+    "user": os.getenv("MYSQL_USER"),
+    "password": os.getenv("MYSQL_PASSWORD"),
+    "database": os.getenv("MYSQL_DATABASE"),
+    "port": int(os.getenv("MYSQL_PORT", 3306))
 }
+   

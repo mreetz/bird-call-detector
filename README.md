@@ -63,16 +63,16 @@ DEBUG = False  # set to True for debug WAV capture
 ```
 
 
-#### For Remote MariaDB, update the database connection in db_config.py:
+#### For Remote MariaDB, update the database connection in birdnet_pi_realtime.env:
 ```python
-MYSQL_CONFIG = {
-    'host': '<HOSTNAME OR IP>',
-    'user': '<DATABASE USER WITH PERMISSIONS TO THE DATABASE>',
-    'password': '<DATABASE PASSWORD FOR user>',
-    'database': '<NAME OF THE DATABASE>',
-    'port': 3306
-}
+MYSQL_HOST=192.168.xx.xxx
+MYSQL_USER=<database_user>
+MYSQL_PASSWORD=<pasword>
+MYSQL_DATABASE=<database_name>
+MYSQL_PORT=3306
 ```
+
+3306 is the default MySQL port, but your environment may differ
 
 #### Alternate: Use SQLite Instead of MariaDB
 

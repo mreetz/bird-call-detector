@@ -1,6 +1,7 @@
 # app.py - Flask web dashboard with Wikipedia and Wikidata fallback for thumbnails
 
 from flask import Flask, render_template, jsonify, request, send_file, redirect, url_for
+from db import Database
 import mariadb
 import requests
 import io
@@ -10,16 +11,16 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# DB configuration
-MYSQL_CONFIG = {
-    'host': '192.168.86.240',
-    'user': 'birdnet_user',
-    'password': 'Birdnetfoobar69!',
-    'database': 'birdcall',
-    'port': 3307
-}
-
 @app.route('/')
+def home():
+    db = Database()
+    try:
+        detections = db.fetch_recent_detections(limit=50)
+    finally:
+        db.close()
+    return render_template('dashboard.html', detections=detections)
+
+
 def index():
     try:
         conn = mariadb.connect(**MYSQL_CONFIG)

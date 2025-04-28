@@ -9,5 +9,5 @@ src/db_config.py
 
 # Logs
 *.log
-*.env
+birdnet_pi_realtime.env
 

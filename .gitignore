@@ -4,6 +4,9 @@ __pychache__/
 *.egg-info/
 venv/
 
+# db_config file since it differs between environments
+src/db_config.py
+
 # Logs
 *.log
 *.env

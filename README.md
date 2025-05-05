@@ -173,7 +173,7 @@ journalctl -u birdnet.service -f
 ## ✅ Summary
 
 Your Raspberry Pi now:
-- Records audio continuously
+- Records audio continuously, minimizing writes to the SD Card
 - Identifies birds via BirdNET-Analyzer
 - Logs detections to MariaDB or SQLite
 - Cleans up debug audio files

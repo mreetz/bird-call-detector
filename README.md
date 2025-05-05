@@ -39,6 +39,8 @@ pip install sounddevice soundfile numpy scipy mariadb birdnetlib
 
 ### 4. Create a RAM Disk for Temporary Audio
 
+This step is added to lower the number of writes to the Raspberry Pi SD Card. Let's use RAM instead.
+
 ```bash
 sudo mkdir -p /mnt/ramdisk
 sudo mount -t tmpfs -o size=128m tmpfs /mnt/ramdisk
@@ -62,6 +64,7 @@ DEVICE_INDEX = 0  # use test_microphones.py to determine this
 DEBUG = False  # set to True for debug WAV capture
 ```
 
+To determine what capabilities you have with your hardware, use test_microphones.py and test_microphone_sample_rate.py for assistance.
 
 #### For Remote MariaDB, update the database connection in birdnet_pi_realtime.env:
 ```python
